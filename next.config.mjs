@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    basePath: "/show-vault",
+    basePath: "/ShowVault",
     output: "export", 
     reactStrictMode: true,
   };
