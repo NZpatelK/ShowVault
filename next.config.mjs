@@ -2,6 +2,9 @@
 const nextConfig = {
     basePath: "/ShowVault",
     output: "export", 
+    images: {
+      unoptimized: true,
+    },
     reactStrictMode: true,
   };
 
