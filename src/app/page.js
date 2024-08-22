@@ -10,7 +10,7 @@ export default function HomePage() {
 
   useEffect(() => {
     // Fetch data from the API route using Axios
-    axios.get('/show-vault/api/movies',{
+    axios.get('/ShowVault/api/movies',{
       params: {
         filterType: 'popular'
       },
