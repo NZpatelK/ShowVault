@@ -4,7 +4,6 @@ import { unstable_noStore as noStore } from 'next/cache';
 const apiKey = process.env.TMDB_API_KEY;
 const baseUrl = 'https://api.themoviedb.org/3';
 
-export const dynamic = "force-dynamic";
 export async function GET(req) {
     noStore();
     const { searchParams } = req.nextUrl;

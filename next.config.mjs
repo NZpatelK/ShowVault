@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     basePath: "/ShowVault",
-    output: "export", 
+    // output: "export", 
     images: {
       unoptimized: true,
     },
