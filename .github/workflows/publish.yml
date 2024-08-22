@@ -31,6 +31,8 @@ jobs:
 
       - name: Build with Next.js 🏗️
         run: npx next build
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
 
       - name: Upload artifact 📡
         uses: actions/upload-pages-artifact@v3
