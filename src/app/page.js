@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import ShowCard from './components/ShowCard';
+import styles from '@/app/page.module.css';
+
 
 export default function HomePage() {
   const [data, setData] = useState(null);
@@ -10,7 +12,7 @@ export default function HomePage() {
 
   useEffect(() => {
     // Fetch data from the API route using Axios
-    axios.get('/ShowVault/api/movies',{
+    axios.get('/api/movies',{
       params: {
         filterType: 'popular'
       },
@@ -29,7 +31,7 @@ export default function HomePage() {
     <div>
       {error && <p>Error: {error.message}</p>}
       {data ? (
-        <div>
+        <div className={styles.grid}>
          {data.map((movie) => (
             // <p key={movie.id}>{movie.title}</p>
             <ShowCard key={movie.id} movie={movie} />

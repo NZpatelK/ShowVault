@@ -22,3 +22,6 @@ export async function GET(req) {
         headers: { 'Content-Type': 'application/json' },
     });
 }
+
+//// https://api.themoviedb.org/3/movie/${movie_id}/images?api_key=${env.apikey}
+// https://image.tmdb.org/t/p/original/9xIpw0fws1OkMCBzHZh0PEZdgg9.png
