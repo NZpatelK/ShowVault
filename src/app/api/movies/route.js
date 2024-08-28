@@ -15,21 +15,6 @@ export async function GET(req) {
         const filterType = searchParams.get('filterType');
         return getList(filterType);
     }
-
-
-    // const endpoint = `movie/${filterType}`;
-
-    // const response = await axios.get(`${baseUrl}/${endpoint}`, {
-    //     params: { api_key: apiKey, language: 'en-US' },
-    //     responseType: 'json',
-    // });
-
-    // const { results } = response.data;
-    // const body = JSON.stringify(results);
-
-    // return new Response(body, {
-    //     headers: { 'Content-Type': 'application/json' },
-    // });
 }
 
 const getImage = async (movieId) => {
@@ -62,39 +47,6 @@ const getImage = async (movieId) => {
         headers: { 'Content-Type': 'application/json' },
     });
 }
-
-
-// const getLogo = async (movieId) => {
-
-//     const response = await axios.get(`${baseUrl}/movie/${movieId}/images`, {
-//         params: { api_key: apiKey},
-//         responseType: 'json',
-//     });
-
-//     const engLogo = response.data.logos.filter(logo => logo.iso_639_1 === 'en');
-
-    
-//     const body = JSON.stringify(engLogo[0].file_path);
-//     return new Response(body, {
-//         headers: { 'Content-Type': 'application/json' },
-//     });
-
-// };
-
-// const getPoster = async(movieId) => {
-//     const response = await axios.get(`${baseUrl}/movie/${movieId}/images`, {
-//         params: { api_key: apiKey},
-//         responseType: 'json',
-//     });
-
-//     const nonTitlePoster = response.data.posters.filter(poster => poster.iso_639_1 === null);
-
-//     const body = JSON.stringify(nonTitlePoster[0].file_path);
-
-//     return new Response(body, {
-//         headers: { 'Content-Type': 'application/json' },
-//     });
-// }
 
 const getList = async(filterType) => {
 

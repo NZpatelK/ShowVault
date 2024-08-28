@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
 import '@/app/styles/ShowCard.css';
+import CastAvatarCards from './CastAvatarCard';
 
 export default function ShowCard({ movie }) {
 
@@ -38,6 +39,7 @@ export default function ShowCard({ movie }) {
         {/* <h2>{movie.title}</h2> */}
         {/* <p>{movie.overview}</p> */}
         {/* <p>Rating: {movie.vote_average}</p> */}
+        <CastAvatarCards movieId={movie.id}/>
       </div>
     </div>
   );

@@ -18,7 +18,6 @@ export default function HomePage() {
       },
     })
       .then((response) => {
-        console.log('Data:', response.data);
         setData(response.data);
       })
       .catch((error) => {
