@@ -47,6 +47,17 @@
   width: var(--max-width);
 }
 
+.flexGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 1.5rem;
+  max-width: 100%;
+}
+
 .card {
   padding: 1rem 1.2rem;
   border-radius: var(--border-radius);

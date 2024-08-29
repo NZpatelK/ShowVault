@@ -12,7 +12,6 @@ export async function GET(req) {
         responseType: "json",
     });
     const { cast } = response.data;
-    console.log(cast);
     const body = JSON.stringify(cast);
     return new Response(body, {
         headers: { "Content-Type": "application/json" },

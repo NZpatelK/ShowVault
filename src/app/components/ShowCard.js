@@ -35,11 +35,11 @@ export default function ShowCard({ movie }) {
         <Image src={`https://image.tmdb.org/t/p/w500${poster || movie.poster_path}`} alt={movie.title} width={500} height={700} />
       </div>
       <div className='content'>
-        {isLogoDisplayed ? <Image src={`https://image.tmdb.org/t/p/original${logo}`} alt={movie.title} width={300} height={300} onError={() => setIsLogoDisplayed(false)} /> : null}
-        {/* <h2>{movie.title}</h2> */}
-        {/* <p>{movie.overview}</p> */}
-        {/* <p>Rating: {movie.vote_average}</p> */}
-        <CastAvatarCards movieId={movie.id}/>
+        {isLogoDisplayed ? <Image src={`https://image.tmdb.org/t/p/original${logo}`} alt={movie.title} width={300} height={300} onError={() => setIsLogoDisplayed(false)} /> : <h2>{movie.title || "No Title"}</h2>}
+        <div className='sub-content'>
+          <p className='overview'>{movie.overview}</p>
+          <CastAvatarCards movieId={movie.id} />
+        </div>
       </div>
     </div>
   );

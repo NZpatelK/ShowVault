@@ -58,6 +58,7 @@ const getList = async(filterType) => {
     });
 
     const { results } = response.data;
+    console.log(results);
     const body = JSON.stringify(results);
 
     return new Response(body, {

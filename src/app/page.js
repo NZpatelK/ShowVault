@@ -30,7 +30,7 @@ export default function HomePage() {
     <div>
       {error && <p>Error: {error.message}</p>}
       {data ? (
-        <div className={styles.grid}>
+        <div className={styles.flexGrid}>
          {data.map((movie) => (
             // <p key={movie.id}>{movie.title}</p>
             <ShowCard key={movie.id} movie={movie} />
