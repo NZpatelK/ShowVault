@@ -44,7 +44,7 @@
 }
 
 .avatar-popup:hover {
-    transform: translate(0px,-10px);
+    transform: translate(0px,-20px) scale(1.5);
 }
 
 .avatar-popup img {
@@ -90,4 +90,10 @@
     left: 50%;
     transform: translateX(-50%) rotate(45deg);
     transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.cast-character{
+    font-size: 8px;
+    color: #666;
+    font-weight: 600;
 }

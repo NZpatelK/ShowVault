@@ -5,8 +5,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
-
 import '@/app/styles/CastAvatarCard.css';
+const avatarIcon = '/avatarIcon.png';
 export default function CastAvatarCards( { movieId } ) {
 
     const [casts, setCasts] = useState([]);
@@ -36,11 +36,11 @@ export default function CastAvatarCards( { movieId } ) {
                     {casts.slice(0, 5).map((cast) => (
                         <div key={cast.id} className="avatar-card">
                             <div className='avatar-tooltip'>
-                                <p>{cast.name}</p>
-                                <p>{cast.character}</p>
+                                <p className='cast-name'>{cast.name}</p>
+                                <p className='cast-character'>{cast.character}</p>
                             </div>
                             <div className="avatar-popup">
-                                <Image className='cast-img' src={`https://image.tmdb.org/t/p/original${cast.profile_path}`} alt=""  width={200} height={200}/>
+                                <Image className='cast-img' src={cast.profile_path ? `https://image.tmdb.org/t/p/w500${cast.profile_path}`: avatarIcon} alt=""  width={200} height={200}/>
                             </div>
                         </div>
                     ))}

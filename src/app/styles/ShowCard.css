@@ -61,6 +61,14 @@
     bottom: 0px;
 }
 
+.card .content .header {
+    display: flex;
+    align-items: flex-start;
+    /* padding: 0 10px; */
+    justify-content: space-between;
+}
+
+
 .card .content img{
     width: 50%;
     height: max-content;
@@ -69,10 +77,11 @@
     padding: 0;
 }
 
-.card .content h2 {
+.card .content .header h2 {
     color: #fff;
     margin: 0;
     padding: 0;
+    width: 50%;
     font-size: 20px;
     text-transform: uppercase;
 }
@@ -90,6 +99,27 @@
 
 .card:hover .sub-content .overview {
     opacity: 1;
+}
+
+.card .trailer {
+    border: 2px solid #fff;
+    border-radius: 100px !important;
+    color: #fff;
+    font-size: 14px;
+    padding: 8px 15px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.card .trailer:hover {
+    background: #fff;
+    color: #000;
+}
+
+.cardd .trailer:hover .play-icon {
+    color: #000;
+
 }
 
 

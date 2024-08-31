@@ -1,43 +1,64 @@
 import { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCirclePlay } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import Image from 'next/image';
 import '@/app/styles/ShowCard.css';
 import CastAvatarCards from './CastAvatarCard';
 
-export default function ShowCard({ movie }) {
+const imgUrl = 'https://image.tmdb.org/t/p/original';
+const videoUrl = 'https://www.youtube.com/watch?v=';
 
-  const [isLogoDisplayed, setIsLogoDisplayed] = useState(true);
+export default function ShowCard({ movie }) {
   const [logo, setLogo] = useState(null);
   const [poster, setPoster] = useState(null);
+  const [video, setVideo] = useState(null);
   const [error, setError] = useState(null);
+  const [showLogo, setShowLogo] = useState(true);
 
   useEffect(() => {
-    // Fetch data from the API route using Axios
-    axios.get('/api/movies', {
-      params: {
-        logo: movie.id
-      },
-    })
+    axios
+      .get('/api/movies', {
+        params: { logo: movie.id },
+      })
       .then((response) => {
         setLogo(response.data.logo);
         setPoster(response.data.poster);
-        setIsLogoDisplayed(true);
+        setVideo(response.data.video);
+        setShowLogo(true);
       })
       .catch((error) => {
         setError(error);
-        console.error('Error fetching data:', error);
       });
-  }, []);
+  }, [movie.id]);
 
   return (
     <div className="card">
-      <div className='poster'>
-        <Image src={`https://image.tmdb.org/t/p/w500${poster || movie.poster_path}`} alt={movie.title} width={500} height={700} />
+      <div className="poster">
+        <Image
+          src={`${imgUrl}${poster || movie.poster_path}`}
+          alt={movie.title}
+          width={500}
+          height={700}
+        />
       </div>
-      <div className='content'>
-        {isLogoDisplayed ? <Image src={`https://image.tmdb.org/t/p/original${logo}`} alt={movie.title} width={300} height={300} onError={() => setIsLogoDisplayed(false)} /> : <h2>{movie.title || "No Title"}</h2>}
-        <div className='sub-content'>
-          <p className='overview'>{movie.overview}</p>
+      <div className="content">
+        <div className="header">
+          {showLogo ? (
+            <Image
+              src={`${imgUrl}${logo}`}
+              alt={movie.title}
+              width={300}
+              height={300}
+              onError={() => setShowLogo(false)}
+            />
+          ) : (
+            <h2>{movie.title || "No Title"}</h2>
+          )}
+          <a className='trailer' href={`${videoUrl}${video}`}><FontAwesomeIcon className='play-icon' icon={faCirclePlay} /> Play Trailer</a>
+        </div>
+        <div className="sub-content">
+          <p className="overview">{movie.overview}</p>
           <CastAvatarCards movieId={movie.id} />
         </div>
       </div>
