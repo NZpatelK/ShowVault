@@ -8,7 +8,7 @@ export async function GET(req) {
     const { searchParams } = req.nextUrl;
     const movieId = searchParams.get("movieId");
     const response = await axios.get(`${baseUrl}/movie/${movieId}/credits`, {
-        params: { api_key: apiKey, language: "en-US"},
+        params: { api_key: apiKey, language: "en-NZ"},
         responseType: "json",
     });
     const { cast } = response.data;

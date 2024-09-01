@@ -11,6 +11,9 @@ export async function GET(req) {
     if (searchParams.get('logo')) {
         return getImage(searchParams.get('logo'));
     }
+    if (searchParams.get('query')) {
+        return getQueryData(searchParams.get('query'));
+    }
     else {
         const filterType = searchParams.get('filterType');
         return getList(filterType);
@@ -37,7 +40,7 @@ const getImage = async (movieId) => {
     poster = response.data.posters.filter(poster => poster.iso_639_1 === null);
 
     const videoResponse = await axios.get(`${baseUrl}/movie/${movieId}/videos`, {
-        params: { api_key: apiKey, language: 'en-US' },
+        params: { api_key: apiKey, language: 'en-NZ' },
         responseType: 'json',
     });
 
@@ -65,7 +68,7 @@ const getList = async (filterType) => {
 
     for (let i = 1; i <= page; i++) {
         const response = await axios.get(`${baseUrl}/${endpoint}`, {
-            params: { api_key: apiKey, language: 'en-US', page: i },
+            params: { api_key: apiKey, language: 'en-NZ', page: i },
             responseType: 'json',
         });
 
@@ -80,6 +83,20 @@ const getList = async (filterType) => {
         headers: { 'Content-Type': 'application/json' },
     });
 
+}
+
+const getQueryData = async (query) => {
+
+    const response = await axios.get(`${baseUrl}/search/movie`, {
+        params: { api_key: apiKey, language: 'en-NZ', query: query },
+        responseType: 'json',
+    });
+
+    const body = JSON.stringify(response.data.results);
+
+    return new Response(body, {
+        headers: { 'Content-Type': 'application/json' },
+    });
 }
 
 // https://api.themoviedb.org/3/movie/${movie_id}/images?api_key=${env.apikey}

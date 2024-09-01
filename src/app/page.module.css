@@ -7,6 +7,12 @@
   min-height: 100vh;
 }
 
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .description {
   display: inherit;
   justify-content: inherit;
@@ -37,6 +43,41 @@
 .code {
   font-weight: 700;
   font-family: var(--font-mono);
+}
+
+.searchContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.searchBar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+  height: 40px;
+  border-radius: 10px 0 0 10px;
+  background-color: #ffffff;
+  border: 2px solid #ffffff;
+  color: #000000;
+  padding-left: 20px;
+  font-size: 18px;
+}
+
+.searchBar:focus{
+  outline: none;
+}
+
+.searchContainer button{
+  padding: 7.5px 40px;
+  border-radius: 0 10px 10px 0;
+  background-color: #0142bc;
+  border: 2px solid #0142bc;
+  color: #ffffff;
+  font-size: 18px;
+  cursor: pointer;
 }
 
 .grid {

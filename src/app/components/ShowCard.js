@@ -17,19 +17,20 @@ export default function ShowCard({ movie }) {
   const [showLogo, setShowLogo] = useState(true);
 
   useEffect(() => {
-    axios
-      .get('/api/movies', {
-        params: { logo: movie.id },
-      })
-      .then((response) => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/api/movies', {
+          params: { logo: movie.id },
+        });
         setLogo(response.data.logo);
         setPoster(response.data.poster);
         setVideo(response.data.video);
         setShowLogo(true);
-      })
-      .catch((error) => {
+      } catch (error) {
         setError(error);
-      });
+      }
+    };
+    fetchData();
   }, [movie.id]);
 
   return (
