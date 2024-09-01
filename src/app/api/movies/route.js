@@ -9,14 +9,14 @@ export async function GET(req) {
     const { searchParams } = req.nextUrl;
 
     if (searchParams.get('logo')) {
-        return getImage(searchParams.get('logo'));
+        return await getImage(searchParams.get('logo'));
     }
     if (searchParams.get('query')) {
-        return getQueryData(searchParams.get('query'));
+        return await getQueryData(searchParams.get('query'));
     }
     else {
         const filterType = searchParams.get('filterType');
-        return getList(filterType);
+        return await getList(filterType);
     }
 }
 
@@ -29,21 +29,18 @@ const getImage = async (movieId) => {
         params: { api_key: apiKey },
         responseType: 'json',
     });
-
     logo = logoResponse.data.logos.filter(logo => logo.iso_639_1 === 'en');
 
     const response = await axios.get(`${baseUrl}/movie/${movieId}/images`, {
         params: { api_key: apiKey },
         responseType: 'json',
     });
-
     poster = response.data.posters.filter(poster => poster.iso_639_1 === null);
 
     const videoResponse = await axios.get(`${baseUrl}/movie/${movieId}/videos`, {
         params: { api_key: apiKey, language: 'en-NZ' },
         responseType: 'json',
     });
-
     video = videoResponse.data.results.filter(video => video.type === 'Trailer' && video.site === 'YouTube');
 
 
@@ -61,18 +58,16 @@ const getImage = async (movieId) => {
 }
 
 const getList = async (filterType) => {
-
     const endpoint = `movie/${filterType}`;
     const page = 2;
     let results = [];
 
     for (let i = 1; i <= page; i++) {
-        const response = await axios.get(`${baseUrl}/${endpoint}`, {
+        const { data } = await axios.get(`${baseUrl}/${endpoint}`, {
             params: { api_key: apiKey, language: 'en-NZ', page: i },
-            responseType: 'json',
         });
 
-        results = results.concat(response.data.results);
+        results = results.concat(data.results);
     }
 
     // console.log(results);
@@ -82,11 +77,9 @@ const getList = async (filterType) => {
     return new Response(body, {
         headers: { 'Content-Type': 'application/json' },
     });
-
 }
 
 const getQueryData = async (query) => {
-
     const response = await axios.get(`${baseUrl}/search/movie`, {
         params: { api_key: apiKey, language: 'en-NZ', query: query },
         responseType: 'json',
