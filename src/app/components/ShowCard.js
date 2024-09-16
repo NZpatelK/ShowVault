@@ -4,7 +4,9 @@ import { faCirclePlay } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import Image from 'next/image';
 import '@/app/styles/ShowCard.css';
+import '@/app/styles/LoadingCard.css';
 import CastAvatarCards from './CastAvatarCard';
+import LoadingCard from './LoadingCard';
 
 const imgUrl = 'https://image.tmdb.org/t/p/original';
 const videoUrl = 'https://www.youtube.com/watch?v=';
@@ -34,13 +36,17 @@ export default function ShowCard({ movie }) {
   }, [movie.id]);
 
   return (
-    <div className="card">
+    <div className={`card`}>
       <div className="poster">
         <Image
           src={`${imgUrl}${poster || movie.poster_path}`}
           alt={movie.title}
           width={500}
           height={700}
+          loader={
+            ({ src, width, quality }) =>
+              `${src}?w=${width}&q=${quality || 10}`
+          }
         />
       </div>
       <div className="content">
@@ -51,7 +57,10 @@ export default function ShowCard({ movie }) {
               alt={movie.title}
               width={300}
               height={300}
-              onError={() => setShowLogo(false)}
+              loader={
+                ({ src, width, quality }) =>
+                  `${src}?w=${width}&q=${quality || 10}`
+              }
             />
           ) : (
             <h2>{movie.title || "No Title"}</h2>

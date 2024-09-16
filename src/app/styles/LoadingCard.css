@@ -1,0 +1,39 @@
+.loading-card{
+    margin: 20px 0;
+    position: relative;
+    width: 333px;
+    height: 499px;
+    border-radius: 20px;
+    background-color: #3a3a3a;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+.loading-card .loader{
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: #fff;
+    font-size: 20px;
+}
+
+.loading-card::before{
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(to right, #3a3a3a 0%, rgba(255, 255, 255, 0.066) 20%, #3a3a3a 40%, #3a3a3a 100%);
+    background-size: 400px 500px;
+    background-repeat: no-repeat;
+    animation: shimmer 1s linear infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -450px 0;
+    }
+
+    100% {
+        background-position: 450px 0;
+    }
+}

@@ -4,6 +4,7 @@ import { lazy, Suspense, useEffect, useState } from 'react';
 import axios from 'axios';
 // import ShowCard from './components/ShowCard';
 import styles from '@/app/page.module.css';
+import LoadingCard from './components/LoadingCard';
 
 const ShowCard = lazy(() => import('./components/ShowCard'));
 
@@ -55,8 +56,7 @@ export default function HomePage() {
       {data || !isLoading ? (
         <div className={styles.flexGrid} style={{ padding: '50px 50px' }}>
           {data.map((movie) => (
-            // <ShowCard key={movie.id} movie={movie} />
-            <Suspense key={movie.id} fallback={<p>Loading...</p>}>
+            <Suspense key={movie.id} fallback={<LoadingCard />}>
               <ShowCard movie={movie} />
             </Suspense>
           ))}
@@ -64,6 +64,7 @@ export default function HomePage() {
       ) : (
         <p>Loading...</p>
       )}
+
     </div>
   );
 }
