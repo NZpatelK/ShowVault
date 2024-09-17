@@ -1,0 +1,19 @@
+.swiper-container {
+    width: 100%;
+    padding: 50px 0;
+}
+
+.swiper-slide{
+    background-position: center;
+    background-size: cover;
+    width: max-content !important;
+    cursor: pointer;
+}
+
+.swiper-slide .card {
+    pointer-events: none;
+}
+
+.swiper-slide-active .card {
+    pointer-events: auto;
+}

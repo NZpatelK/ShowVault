@@ -36,7 +36,7 @@ export default function ShowCard({ movie }) {
   }, [movie.id]);
 
   return (
-    <div className={`card`}>
+    <div className='card'>
       <div className="poster">
         <Image
           src={`${imgUrl}${poster || movie.poster_path}`}
@@ -61,6 +61,7 @@ export default function ShowCard({ movie }) {
                 ({ src, width, quality }) =>
                   `${src}?w=${width}&q=${quality || 10}`
               }
+              onError={() => setShowLogo(false)}
             />
           ) : (
             <h2>{movie.title || "No Title"}</h2>
