@@ -1,43 +1,62 @@
 // src/app/page.js
 'use client';
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from '@/app/page.module.css';
 import '@/app/styles/HomePage.css';
-import LoadingCard from './components/LoadingCard';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
-
-const ShowCard = lazy(() => import('./components/ShowCard'));
-
+import CarouselCards from './components/CarouselCards';
 
 export default function HomePage() {
   const [data, setData] = useState(null);
+  const [welcomeData, setWelcomeData] = useState({
+    'now_playing': null,
+    'upcoming': null,
+    'trending': null,
+    'popular': null,
+    'top_rated': null,
+  });
+  const [resultData, setResultData] = useState(null);
+  const [isQuerying, setIsQuerying] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchWelcomeData = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get('/api/movies', {
-          params: {
-            filterType: 'popular'
-          },
-        });
-        setData(response.data);
+        const promises = Object.keys(welcomeData).map((filterType) =>
+          fetchWelcomeDataForFilterType(filterType)
+        );
+        await Promise.all(promises);
       } catch (error) {
         setError(error);
-        console.error('Error fetching data:', error);
       } finally {
         setIsLoading(false);
       }
     };
-    fetchData();
-  }, []);
+
+    const fetchWelcomeDataForFilterType = async (filterType) => {
+      try {
+        const response = await axios.get('/api/movies', {
+          params: { filterType },
+        });
+        setWelcomeData((prevWelcomeData) => ({
+          ...prevWelcomeData,
+          [filterType]: response.data,
+        }));
+        console.log(response.data);
+      } catch (error) {
+        setError(error);
+      }
+    };
+
+    fetchWelcomeData();
+
+  }, [ ]);
 
   const handleQueryChange = async (event) => {
     const query = event.target.value;
@@ -53,7 +72,7 @@ export default function HomePage() {
           params: { filterType: 'popular' },
         })
       )
-      setData(response.data);
+      setResultData(response.data);
     } catch (error) {
       setError(error);
     }
@@ -66,29 +85,14 @@ export default function HomePage() {
         <input type="text" placeholder="Search" className={styles.searchBar} onChange={handleQueryChange} />
         <button className={styles.button}>Search</button>
       </div>
-      {data || !isLoading ? (
-        <Swiper className='swiper-container' style={{ padding: '50px 50px' }}
-          effect={'coverflow'}
-          grabCursor={true}
-          centeredSlides={true}
-          slidesPerView={'auto'}
-          coverflowEffect={{
-            rotate: 5,
-            stretch: 0,
-            depth: 100,
-            modifier: 3,
-            slideShadows: true,
-          }}
-          pagination={true}
-          modules={[EffectCoverflow]}>
-          {data.map((movie) => (
-            <Suspense key={movie.id} fallback={<LoadingCard />}>
-              <SwiperSlide className='swiper-slide'>
-                <ShowCard movie={movie} />
-              </SwiperSlide>
-            </Suspense>
-          ))}
-        </Swiper>
+      { welcomeData.popular  || !isLoading ? (
+        Object.keys(welcomeData).map((filterType) => (
+          <div className={styles.welcomeContent} key={filterType}>
+            <h1>{filterType}</h1>
+            <CarouselCards data={welcomeData[filterType]} />
+          </div>
+        ))
+ 
       ) : (
         <p>Loading...</p>
       )}

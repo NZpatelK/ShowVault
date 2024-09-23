@@ -10,7 +10,6 @@
 .container{
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .description {
@@ -79,6 +78,21 @@
   font-size: 18px;
   cursor: pointer;
 }
+
+
+.welcomeContent{
+  margin: 100px 0 ;
+}
+
+.welcomeContent h1{
+  font-size: 2.5rem;
+  font-weight: 700;
+  padding: 0;
+  margin-bottom: 0px;
+  margin-left: 80px;
+  text-transform: uppercase;
+}
+
 
 .grid {
   display: grid;
