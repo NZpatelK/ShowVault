@@ -3,8 +3,8 @@
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
     background-color: #000000;
     transition: transform 0.3s ease-in-out;
-    width: 333px;
-    height: 499px;
+    width: 320px;
+    height: 459px;
     overflow: hidden;
     border-radius: 20px;
     transform: scale(1);
@@ -17,6 +17,18 @@
 .card .poster {
     position: relative;
     overflow: hidden;
+}
+
+.no-poster {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 315px;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;    
 }
 
 .card .poster::before {
@@ -83,7 +95,7 @@
     margin: 0;
     padding: 0;
     width: 50%;
-    font-size: 20px;
+    font-size: 16px;
     text-transform: uppercase;
 }
 
@@ -93,7 +105,7 @@
     text-align: justify;
     padding: 0;
     opacity: 0;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 300;
     transition: 0.5s;
 }
@@ -123,21 +135,3 @@
 
 }
 
-
-
-
-
-/* .card .content{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(20deg, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0) 100%);
-    bottom: 0;
-    border-radius: 0 0 10px 10px;
-    transform: translateY(100%);
-    transition: transform 0.3s ease-in-out;
-}
-
-.card:hover .content {
-    transform: translateY(0);
-} */

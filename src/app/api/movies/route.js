@@ -58,19 +58,15 @@ const getImage = async (movieId) => {
 }
 
 const getList = async (filterType) => {
-    const endpoint = `movie/${filterType}`;
-    const page = 2;
+
+    const endpoint = filterType == 'trending' ? 'trending/movie/week' : 'movie/' + filterType;
     let results = [];
 
-    for (let i = 1; i <= page; i++) {
-        const { data } = await axios.get(`${baseUrl}/${endpoint}`, {
-            params: { api_key: apiKey, language: 'en-NZ', page: i },
-        });
+    const { data } = await axios.get(`${baseUrl}/${endpoint}`, {
+        params: { api_key: apiKey, language: 'en-NZ'},
+    });
 
-        results = results.concat(data.results);
-    }
-
-    // console.log(results);
+    results = results.concat(data.results);
 
     const body = JSON.stringify(results);
 
