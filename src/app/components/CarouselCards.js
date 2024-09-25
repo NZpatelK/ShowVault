@@ -27,7 +27,7 @@ const CarouselCards = ({ data }) => {
             modules={[EffectCoverflow]}>
             {data.map((movie) => (
                 <Suspense key={movie.id} fallback={<LoadingCard />}>
-                    <SwiperSlide key={movie.id} className='swiper-slide'>
+                    <SwiperSlide className='swiper-slide'>
                         <ShowCard movie={movie} />
                     </SwiperSlide>
                 </Suspense>

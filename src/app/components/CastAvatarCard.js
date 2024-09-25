@@ -25,10 +25,12 @@ export default function CastAvatarCards({ movieId }) {
 
   return (
     <div className="avatar-container">
-      <div className="avatar-group">
-        <div className="avatar-hidden">
-          +{casts.length - 5}
-        </div>
+      <div className="avatar-group" style={{marginLeft: casts.length <= 5 ? '20px' : ''}}>
+        {casts.length > 5 &&
+          <div className="avatar-hidden">
+            +{casts.length - 5}
+          </div>
+        }
         {casts.slice(0, 5).map((cast) => (
           <div key={cast.id} className="avatar-card">
             <div className="avatar-tooltip">

@@ -8,9 +8,10 @@ import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import CarouselCards from './components/CarouselCards';
+import ShowCard from './components/ShowCard';
+import LoadingCard from './components/LoadingCard';
 
 export default function HomePage() {
-  const [data, setData] = useState(null);
   const [welcomeData, setWelcomeData] = useState({
     'now_playing': null,
     'upcoming': null,
@@ -19,7 +20,8 @@ export default function HomePage() {
     'top_rated': null,
   });
   const [resultData, setResultData] = useState(null);
-  const [isQuerying, setIsQuerying] = useState(false);
+  const [query, setQuery] = useState('');
+  // const [isQuerying, setIsQuerying] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -56,10 +58,11 @@ export default function HomePage() {
 
     fetchWelcomeData();
 
-  }, [ ]);
+  }, []);
 
-  const handleQueryChange = async (event) => {
-    const query = event.target.value;
+  const handleClickQueryButton = async (event) => {
+    event.preventDefault();
+    setIsLoading(true);
     try {
       let response;
       if (query) (
@@ -68,13 +71,15 @@ export default function HomePage() {
         })
       )
       else (
-        response = await axios.get('/api/movies', {
-          params: { filterType: 'popular' },
-        })
+        setResultData(null)
       )
+      console.log(response.data);
       setResultData(response.data);
     } catch (error) {
       setError(error);
+    }
+    finally {
+      setIsLoading(false);
     }
   };
 
@@ -82,19 +87,36 @@ export default function HomePage() {
     <div className={styles.container}>
       {error && <p>Error: {error.message}</p>}
       <div className={styles.searchContainer}>
-        <input type="text" placeholder="Search" className={styles.searchBar} onChange={handleQueryChange} />
-        <button className={styles.button}>Search</button>
+        <input type="text" placeholder="Search" className={styles.searchBar} onChange={(e) => setQuery(e.target.value)} />
+        <button className={styles.button} onClick={handleClickQueryButton} >Search</button>
       </div>
-      { welcomeData.popular  || !isLoading ? (
-        Object.keys(welcomeData).map((filterType) => (
-          <div className={styles.welcomeContent} key={filterType}>
-            <h1>{filterType}</h1>
-            <CarouselCards data={welcomeData[filterType]} />
+      {welcomeData && !isLoading ? (
+        resultData ?
+          <div className={styles.resultsContainer}>
+            <div className={styles.results}>
+              {resultData.map((movie) => (
+                <ShowCard key={movie.id} movie={movie} />
+              ))}
+            </div>
           </div>
-        ))
- 
+          : Object.keys(welcomeData).map((filterType) => (
+            welcomeData[filterType] ?
+              <div className={styles.welcomeContent} key={filterType}>
+                <h1>{filterType.replace(/_/g, ' ')}</h1>
+                <CarouselCards data={welcomeData[filterType]} />
+              </div>
+              :
+              null
+          ))
+
       ) : (
-        <p>Loading...</p>
+        <div className={styles.resultsContainer}>
+          <div className={styles.results}>
+            {Array.from({ length: 20 }).map((_, index) => (
+              <LoadingCard key={index} />
+            ))}
+          </div>
+        </div>
       )}
 
     </div>
