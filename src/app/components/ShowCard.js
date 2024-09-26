@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlay } from '@fortawesome/free-solid-svg-icons';
+import Rating from '@mui/material/Rating';
 import axios from 'axios';
 import Image from 'next/image';
 import '@/app/styles/ShowCard.css';
 import '@/app/styles/LoadingCard.css';
 import CastAvatarCards from './CastAvatarCard';
-import LoadingCard from './LoadingCard';
 
 const imgUrl = 'https://image.tmdb.org/t/p/original';
-const videoUrl = 'https://www.youtube.com/watch?v=';
 
-export default function ShowCard({ movie }) {
+export default function ShowCard({ movie, handleVideoModal }) {
   const [logo, setLogo] = useState(null);
   const [poster, setPoster] = useState(null);
   const [video, setVideo] = useState(null);
   const [error, setError] = useState(null);
   const [showLogo, setShowLogo] = useState(true);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,7 +38,7 @@ export default function ShowCard({ movie }) {
   return (
     <div className='card'>
       <div className="poster">
-         { movie.poster_path ? <Image
+        {movie.poster_path ? <Image
           src={`${imgUrl}${poster || movie.poster_path}`}
           alt={movie.title}
           width={500}
@@ -66,7 +66,13 @@ export default function ShowCard({ movie }) {
           ) : (
             <h2>{movie.title || "No Title"}</h2>
           )}
-          <a className='trailer' href={`${videoUrl}${video}`}><FontAwesomeIcon className='play-icon' icon={faCirclePlay} /> Play Trailer</a>
+          <div>
+            <button className='trailer' onClick={() => handleVideoModal(true, video)}><FontAwesomeIcon className='play-icon' icon={faCirclePlay} /> Play Trailer</button>
+            <div className="ratingContainer">
+              <Rating name="read-only" value={movie.vote_average / 2} precision={0.1} readOnly size="small" />
+              <p>{(movie.vote_average/2).toFixed(1)}/5</p>
+            </div>
+          </div>
         </div>
         <div className="sub-content">
           <p className="overview">{movie.overview}</p>

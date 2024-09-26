@@ -25,7 +25,7 @@ export default function CastAvatarCards({ movieId }) {
 
   return (
     <div className="avatar-container">
-      <div className="avatar-group" style={{marginLeft: casts.length <= 5 ? '20px' : ''}}>
+      <div className="avatar-group" style={{marginLeft: casts.length <= 5 ? '50px' : ''}}>
         {casts.length > 5 &&
           <div className="avatar-hidden">
             +{casts.length - 5}

@@ -1,15 +1,13 @@
 // src/app/page.js
 'use client';
-import { lazy, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from '@/app/page.module.css';
 import '@/app/styles/HomePage.css';
-import 'swiper/css';
-import 'swiper/css/effect-coverflow';
-import 'swiper/css/pagination';
 import CarouselCards from './components/CarouselCards';
 import ShowCard from './components/ShowCard';
 import LoadingCard from './components/LoadingCard';
+import VideoModal from './components/VideoModal';
 
 export default function HomePage() {
   const [welcomeData, setWelcomeData] = useState({
@@ -21,8 +19,8 @@ export default function HomePage() {
   });
   const [resultData, setResultData] = useState(null);
   const [query, setQuery] = useState('');
-  // const [isQuerying, setIsQuerying] = useState(false);
   const [error, setError] = useState(null);
+  const [videoModal, setVideoModal] = useState({ show: false, videoId: null });
   const [isLoading, setIsLoading] = useState(true);
 
 
@@ -50,7 +48,6 @@ export default function HomePage() {
           ...prevWelcomeData,
           [filterType]: response.data,
         }));
-        console.log(response.data);
       } catch (error) {
         setError(error);
       }
@@ -65,16 +62,16 @@ export default function HomePage() {
     setIsLoading(true);
     try {
       let response;
-      if (query) (
+      if (query && query.trim() !== '') (
+        console.log('query: ', query),
         response = await axios.get('/api/movies', {
           params: { query: query },
-        })
+        }),
+        setResultData(response.data)
       )
       else (
         setResultData(null)
       )
-      console.log(response.data);
-      setResultData(response.data);
     } catch (error) {
       setError(error);
     }
@@ -83,11 +80,15 @@ export default function HomePage() {
     }
   };
 
+  const handleVideoModal = (show, videoId) => {
+    setVideoModal({ show, videoId });
+  };
+
   return (
     <div className={styles.container}>
       {error && <p>Error: {error.message}</p>}
       <div className={styles.searchContainer}>
-        <input type="text" placeholder="Search" className={styles.searchBar} onChange={(e) => setQuery(e.target.value)} />
+        <input type="text" placeholder="Search" className={styles.searchBar} onChange={(e) => setQuery(e.target.value)}  onKeyDown={(e) => {if (e.key === 'Enter') handleClickQueryButton(e)}}/>
         <button className={styles.button} onClick={handleClickQueryButton} >Search</button>
       </div>
       {welcomeData && !isLoading ? (
@@ -95,7 +96,7 @@ export default function HomePage() {
           <div className={styles.resultsContainer}>
             <div className={styles.results}>
               {resultData.map((movie) => (
-                <ShowCard key={movie.id} movie={movie} />
+                <ShowCard key={movie.id} movie={movie} handleVideoModal={handleVideoModal} />
               ))}
             </div>
           </div>
@@ -103,7 +104,7 @@ export default function HomePage() {
             welcomeData[filterType] ?
               <div className={styles.welcomeContent} key={filterType}>
                 <h1>{filterType.replace(/_/g, ' ')}</h1>
-                <CarouselCards data={welcomeData[filterType]} />
+                <CarouselCards data={welcomeData[filterType]} handleVideoModal={handleVideoModal} />
               </div>
               :
               null
@@ -118,7 +119,7 @@ export default function HomePage() {
           </div>
         </div>
       )}
-
+        <VideoModal videoId={videoModal.videoId} toggle={videoModal.show} handleClose={() => handleVideoModal(false, null)} />
     </div>
   );
 }

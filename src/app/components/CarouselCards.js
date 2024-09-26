@@ -8,7 +8,7 @@ import 'swiper/css/pagination';
 
 const ShowCard = lazy(() => import('./ShowCard'));
 
-const CarouselCards = ({ data }) => {
+const CarouselCards = ({ data, handleVideoModal }) => {
 
     return (
         <Swiper className='swiper-container' style={{ padding: '50px 50px' }}
@@ -28,7 +28,7 @@ const CarouselCards = ({ data }) => {
             {data.map((movie) => (
                 <Suspense key={movie.id} fallback={<LoadingCard />}>
                     <SwiperSlide className='swiper-slide'>
-                        <ShowCard movie={movie} />
+                        <ShowCard movie={movie} handleVideoModal={handleVideoModal} />
                     </SwiperSlide>
                 </Suspense>
             ))}
