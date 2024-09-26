@@ -122,6 +122,7 @@
     padding: 8px 15px;
     border-radius: 3px;
     cursor: pointer;
+    background-color: transparent;
     transition: all 0.3s ease;
 }
 
@@ -133,5 +134,20 @@
 .cardd .trailer:hover .play-icon {
     color: #000;
 
+}
+
+.ratingContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.ratingContainer p {
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    font-size: 10px;
+    margin-right: 5px;
 }
 
