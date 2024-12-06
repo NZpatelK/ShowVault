@@ -60,7 +60,7 @@ To set up and run ShowVault locally, follow these steps:
 
 Check out our video demo on LinkedIn to see ShowVault in action:
 
-[Watch the ShowVault Demo](https://www.linkedin.com/posts/karan-h-patel_webdevelopment-nextjs-react-activity-7236127386524602369-j8Nj?utm_source=share&utm_medium=member_desktop)
+[Watch the ShowVault Demo](https://www.linkedin.com/posts/karan-h-patel_i-recently-completed-the-second-version-of-activity-7245210655488647169--Ztd?utm_source=share&utm_medium=member_desktop)
 
 
 ## License 📜
